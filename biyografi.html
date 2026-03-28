@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazreti Yasuo - Biyografi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: #0a0000;
+            color: #ffdddd;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.85;
+            margin: 0;
+        }
+        nav {
+            background: rgba(10, 0, 0, 0.97);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #ff0000;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        .logo { 
+            font-size: 2rem; 
+            font-weight: 900; 
+            color: #ff4444; 
+            letter-spacing: 2px; 
+        }
+        .nav-links a {
+            color: #fff;
+            margin-left: 35px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #ff0000; }
+
+        .container { 
+            max-width: 1100px; 
+            margin: 80px auto; 
+            padding: 0 40px; 
+        }
+        h1 { 
+            font-size: 3.8rem; 
+            color: #ff4444; 
+            margin-bottom: 8px; 
+        }
+        .info { 
+            font-size: 1.45rem; 
+            color: #ff8888; 
+            margin-bottom: 50px; 
+        }
+
+        .section { 
+            margin-bottom: 90px; 
+        }
+        h2 { 
+            color: #ff6666; 
+            font-size: 2.2rem; 
+            margin-bottom: 25px; 
+            border-left: 5px solid #ff0000; 
+            padding-left: 15px; 
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+        .stat-card {
+            background: #1a0000;
+            padding: 30px 20px;
+            text-align: center;
+            border: 2px solid #440000;
+            transition: all 0.4s ease;
+        }
+        .stat-card:hover {
+            border-color: #ff0000;
+            transform: translateY(-12px);
+            box-shadow: 0 0 30px rgba(255,0,0,0.4);
+        }
+        .stat-card h3 { 
+            font-size: 2.4rem; 
+            color: #ff5555; 
+        }
+
+        /* ====================== ETKİLEŞİM BÖLÜMÜ ====================== */
+        .interaction-section {
+            background: #1a0000;
+            padding: 50px 40px;
+            border: 3px solid #660000;
+            margin-top: 80px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .start-quiz-btn {
+            padding: 18px 50px;
+            font-size: 1.5rem;
+            background: #880000;
+            color: white;
+            border: 4px solid #ff0000;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.4s;
+            margin-bottom: 30px;
+        }
+        .start-quiz-btn:hover {
+            background: #ff0000;
+            transform: scale(1.08);
+        }
+
+        .quiz-area {
+            background: #110000;
+            padding: 35px;
+            border: 2px solid #880000;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .progress {
+            color: #ff6666;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.45rem;
+            margin-bottom: 30px;
+            color: #ffdddd;
+        }
+
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0;
+            background: #220000;
+            color: #ffcccc;
+            border: 2px solid #660000;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            border-radius: 6px;
+        }
+        .options button:hover {
+            background: #440000;
+            border-color: #ff0000;
+        }
+        .options button.correct {
+            background: #004400;
+            border-color: #00ff00;
+            color: white;
+        }
+        .options button.wrong {
+            background: #440000;
+            border-color: #ff0000;
+        }
+
+        .feedback {
+            margin: 25px 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 50px;
+        }
+
+        .next-btn {
+            padding: 14px 40px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+            background: #110000;
+            border: 3px solid #ff0000;
+            border-radius: 12px;
+        }
+
+        .score-text {
+            font-size: 2.2rem;
+            color: #ff5555;
+            margin: 20px 0;
+        }
+
+        .easter-egg {
+            background: #330000;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px dashed #ff8800;
+            border-radius: 8px;
+            color: #ffdd88;
+        }
+
+        .restart-btn {
+            padding: 16px 45px;
+            background: #660000;
+            color: white;
+            border: 3px solid #ff0000;
+            font-size: 1.3rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        /* ============================================================ */
+
+        .next-btn-main {
+            display: block;
+            width: fit-content;
+            margin: 70px auto 0;
+            padding: 20px 65px;
+            background: #660000;
+            color: white;
+            font-size: 1.6rem;
+            border: 4px solid #ff0000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.5s;
+        }
+        .next-btn-main:hover {
+            background: #ff0000;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">HAZRETİ YASUO</div>
+            <div class="nav-links">
+                <a href="index.html">Ana Sayfa</a>
+                <a href="biyografi.html">Biyografi</a>
+                <a href="efsane.html">Efsane</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Mustafa Yavuz</h1>
+        <p class="info">Hazreti Yasuo • 29 yaşında • İstanbul</p>
+
+        <div class="section">
+            <h2>Kimdir?</h2>
+            <p><strong>Hazreti Yasuo</strong>, gerçek adıyla Mustafa Yavuz, 1996 yılında İstanbul'da doğmuştur. Yıldız Teknik Üniversitesi Bilgisayar Mühendisliği bölümünü 3. sınıfta bırakarak yayıncılığa odaklanmıştır.</p>
+            <p>10 yılı aşkın süredir içerik üreten yayıncı, enerjik ve eğlenceli tarzıyla tanınır. Uzun yıllar Twitch ve YouTube'da aktif olan Mustafa, şu anda yayınlarını <strong>Kick</strong> platformu üzerinden sürdürmektedir.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>550.000+</h3>
+                <p>YouTube Abonesi</p>
+            </div>
+            <div class="stat-card">
+                <h3>750.000+</h3>
+                <p>Twitch Takipçisi</p>
+            </div>
+            <div class="stat-card">
+                <h3>99.000+</h3>
+                <p>Kick Takipçisi</p>
+            </div>
+            <div class="stat-card">
+                <h3>560.000+</h3>
+                <p>Instagram Takipçisi</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Yayın İçerikleri</h2>
+            <p>Genellikle <strong>League of Legends</strong> (özellikle Yasuo ve Katarina) ve <strong>Phasmophobia</strong> gibi korku oyunları üzerine yayın yapar. Agresif oyun tarzı ve samimi sohbetleriyle izleyicileriyle güçlü bir bağ kurmuştur.</p>
+        </div>
+
+        <!-- ====================== ETKİLEŞİM BÖLÜMÜ ====================== -->
+        <div class="interaction-section">
+            <h2><i class="fas fa-gamepad"></i> Chattekilere Soru Sor & Test Et</h2>
+            <p style="margin: 20px 0 40px; color: #ffaaaa;">
+                Yayın sırasında chattekilere sorabileceğin soruları burada test et.<br>
+                <strong>Doğru cevap verenlere "31" yazmayı unutma! 🔥</strong>
+            </p>
+
+            <button class="start-quiz-btn" onclick="startQuiz()">
+                🎯 Yasuo Bilgi Testi Başlat (6 Soru)
+            </button>
+
+            <!-- Quiz Alanı -->
+            <div id="quiz-area" class="quiz-area" style="display: none;">
+                <div class="progress">
+                    Soru <span id="question-number">1</span>/6
+                </div>
+                
+                <h3 id="question-text" class="question-text"></h3>
+                
+                <div id="options" class="options"></div>
+
+                <div id="feedback" class="feedback"></div>
+
+                <button id="next-btn" class="next-btn" onclick="nextQuestion()" style="display:none;">
+                    Sonraki Soru →
+                </button>
+            </div>
+
+            <!-- Sonuç Ekranı -->
+            <div id="result-screen" class="result-screen" style="display:none;">
+                <h2>Quiz Tamamlandı!</h2>
+                <p class="score-text">Skorun: <span id="final-score">0</span>/6</p>
+                <p id="result-message" class="result-message"></p>
+                
+                <div id="easter-egg" class="easter-egg" style="display:none;">
+                    <h3>🎉 EASTER EGG AKTİF!</h3>
+                    <p>Chatte "31" yazanlara selam söyle!<br>KutukSokan31 mod aktif 💀</p>
+                </div>
+
+                <button onclick="restartQuiz()" class="restart-btn">Tekrar Oyna</button>
+            </div>
+        </div>
+        <!-- ============================================================ -->
+
+        <a href="efsane.html" class="next-btn-main">EFSANE BÖLÜMÜNE GEÇ →</a>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questions = [
+            {
+                q: "Hazreti Yasuo'nun gerçek adı nedir?",
+                options: ["Mustafa Yavuz", "Ahmet Yılmaz", "Enes Kanter", "Emre Demir"],
+                correct: 0
+            },
+            {
+                q: "Hangi üniversiteden ayrıldı?",
+                options: ["Yıldız Teknik Üniversitesi", "Pensilvanya Üniversitesi", "İstanbul Teknik Üniversitesi", "Marmara Üniversitesi"],
+                correct: 0
+            },
+            {
+                q: "Şu anda yayınlarını hangi platformda yapıyor?",
+                options: ["Twitch", "YouTube", "Kick", "Bylock"],
+                correct: 2
+            },
+            {
+                q: "En çok hangi şampiyonu main'ler?",
+                options: ["Master Yi", "Zed", "Katarina", "Yone"],
+                correct: 0
+            },
+            {
+                q: "Yayınlarında en sık oynadığı korku oyunu hangisidir?",
+                options: ["Outlast", "Phasmophobia", "Amnesia", "Dead by Daylight"],
+                correct: 1
+            },
+            {
+                q: "Hazreti Yasuo kaç yaşındadır? (2026 itibarıyla)",
+                options: ["27", "28", "29", "30"],
+                correct: 2
+            }
+        ];
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-area').style.display = 'block';
+            document.getElementById('result-screen').style.display = 'none';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            answered = false;
+            const q = questions[currentQuestion];
+            
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = q.q;
+            
+            let html = '';
+            q.options.forEach((opt, index) => {
+                html += `<button onclick="selectAnswer(${index})">${opt}</button>`;
+            });
+            document.getElementById('options').innerHTML = html;
+            
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const correctIndex = questions[currentQuestion].correct;
+            const buttons = document.querySelectorAll('#options button');
+
+            buttons.forEach((btn, i) => {
+                if (i === correctIndex) btn.classList.add('correct');
+                if (i === selectedIndex && i !== correctIndex) btn.classList.add('wrong');
+                btn.disabled = true;
+            });
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                document.getElementById('feedback').innerHTML = '✅ Doğru Cevap!';
+                document.getElementById('feedback').style.color = '#00ff88';
+            } else {
+                document.getElementById('feedback').innerHTML = `❌ Yanlış! Doğru cevap: ${questions[currentQuestion].options[correctIndex]}`;
+                document.getElementById('feedback').style.color = '#ff6666';
+            }
+
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-area').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+
+            const messageEl = document.getElementById('result-message');
+            const easterEgg = document.getElementById('easter-egg');
+
+            if (score >= 4) {
+                messageEl.innerHTML = '🎉 Harika! Artık chatte soruları sorarken "31" yazabilirsin!';
+                easterEgg.style.display = 'block';
+            } else if (score >= 2) {
+                messageEl.innerHTML = '😎 Fena değil! Biraz daha yayın izle, sonra "31" moduna geçersin.';
+            } else {
+                messageEl.innerHTML = 'Biraz daha Hazreti Yasuo videosu izlemen lazım 👍';
+            }
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+    </script>
+
+    <!-- SES DOSYASI -->
+    <audio id="clickSound" preload="auto">
+        <source src="assets/click.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function playClick() {
+            const click = document.getElementById('clickSound');
+            click.currentTime = 0;
+            click.volume = 0.8;
+            click.play().catch(() => {});
+        }
+
+        // Tüm butonlara click sesi ekle
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                playClick();
+            }
+        });
+    </script>
+
+</body>
+</html>

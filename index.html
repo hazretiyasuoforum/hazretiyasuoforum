@@ -3,165 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hazreti Yasuo Forum Sayfası</title>
-   
-    <!-- ===== FAVICON EKLEME ===== -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="favicon.png">
-    <!-- ======================== -->
-
+    <title>Hazreti Yasuo | Resmi Biyografi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; overflow: hidden; }
+        :root {
+            --red: #ff0000;
+            --dark: #0a0000;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html {
             height: 100%;
-            background: #000;
+            background: linear-gradient(135deg, #1a0000, #000000);
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
         }
-        /* Hoş Geldin Paneli */
-        #welcome-panel {
+        #welcome {
             position: fixed;
             inset: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(to bottom, #1a0000, #000000);
             z-index: 30;
-            cursor: pointer;
-            transition: opacity 1.2s ease;
+            transition: opacity 1.5s ease;
         }
         #welcome-image {
-            max-width: 75%;
-            max-height: 55%;
-            margin-bottom: 40px;
-            border: 5px solid #880000;
-            box-shadow: 0 0 50px #ff0000,
-                        0 0 80px rgba(255, 0, 0, 0.6);
+            max-width: 65%;
+            border: 8px solid var(--red);
+            box-shadow: 0 0 80px rgba(255,0,0,0.8);
+            border-radius: 12px;
+            transition: transform 0.6s;
         }
-        #welcome-text {
-            font-size: 3.5rem;
-            font-weight: bold;
-            text-align: center;
-            text-shadow: 0 0 25px #ff0000,
-                         0 0 40px #ff0000;
-            margin-bottom: 15px;
-            letter-spacing: 3px;
+        #welcome:hover #welcome-image { transform: scale(1.05); }
+        h1 {
+            font-size: 4.2rem;
+            margin: 30px 0 10px;
+            text-shadow: 0 0 40px var(--red);
+            letter-spacing: 6px;
         }
-        #sub-text {
+        .subtitle {
             font-size: 1.8rem;
             color: #ff6666;
-            text-shadow: 0 0 15px #ff0000;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
-        #click-hint {
-            font-size: 1.4rem;
-            color: #ff9999;
-            animation: pulse 2s infinite;
+        .enter-btn {
+            padding: 18px 60px;
+            font-size: 1.6rem;
+            background: transparent;
+            color: white;
+            border: 3px solid var(--red);
+            cursor: pointer;
+            transition: all 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        /* Jumpscare */
-        #scare {
-            display: none;
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 10;
-        }
-        .shake {
-            animation: shake 0.35s linear infinite;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translate(2px, 2px) rotate(0deg); }
-            20% { transform: translate(-5px, -5px) rotate(-3deg); }
-            40% { transform: translate(5px, 5px) rotate(3deg); }
-            60% { transform: translate(-4px, -3px) rotate(-2deg); }
-            80% { transform: translate(4px, 4px) rotate(2deg); }
+        .enter-btn:hover {
+            background: var(--red);
+            box-shadow: 0 0 40px var(--red);
+            transform: translateY(-5px);
         }
     </style>
 </head>
 <body>
 
-    <!-- Hoş Geldin Paneli -->
-    <div id="welcome-panel">
+    <div id="welcome">
         <img id="welcome-image" src="welcome.png" alt="Hazreti Yasuo">
-        <h1 id="welcome-text">FORUMA HOŞ GELDİN</h1>
-        <p id="sub-text">-KutukSokan31</p>
-        <p id="click-hint">Foruma giriş yapmak için tıklayınız.</p>
+        <h1>HAZRETİ YASUO</h1>
+        <p class="subtitle">Mustafa Yavuz • Twitch'in Delisi</p>
+        <button class="enter-btn" onclick="enterSite()">BİYOGRAFİYE GİRİŞ YAP</button>
     </div>
 
-    <!-- Jumpscare GIF -->
-    <img id="scare" src="scare.gif" alt="Jumpscare">
-
-    <!-- Ses Dosyası -->
-    <audio id="horrorSound" preload="auto">
-        <source src="horror.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        const welcomePanel = document.getElementById('welcome-panel');
-        const scareImg = document.getElementById('scare');
-        const sound = document.getElementById('horrorSound');
-
-        function goFullscreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) elem.requestFullscreen();
-            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-        }
-
-        // ===== YENİ EKLENEN KISIM: F11 ile çıkarken onay mesajı =====
-        window.addEventListener('beforeunload', function(e) {
-            // Sadece tam ekranda ise uyarı göster (çoğu tarayıcıda etkili)
-            if (document.fullscreenElement || document.webkitFullscreenElement) {
-                e.preventDefault();
-                e.returnValue = "Tam ekrandan çıkmak istediğinizden emin misiniz?\n\nJumpscare devam edebilir.";
-                return e.returnValue;
-            }
-        });
-        // ===========================================================
-
-        // Tıklama olayı
-        document.addEventListener('click', function() {
-            // Hoş geldin panelini kaldır
-            welcomePanel.style.opacity = '0';
-          
+        function enterSite() {
+            document.getElementById('welcome').style.opacity = '0';
             setTimeout(() => {
-                welcomePanel.style.display = 'none';
+                window.location.href = "biyografi.html";
             }, 1200);
-
-            // Tam ekrana geç
-            goFullscreen();
-
-            // Ekran sarsılma efekti
-            document.body.classList.add('shake');
-            document.body.style.filter = 'brightness(2.1) saturate(2.8)';
-
-            // Jumpscare başlat
-            scareImg.style.display = 'block';
-          
-            // Ses çal
-            sound.currentTime = 0;
-            sound.volume = 1.0;
-            sound.play().catch(e => {
-                console.log("Ses hatası:", e);
-                alert("Ses çalamadı!\n\nTarayıcıyı yenile (Ctrl + F5) ve tekrar dene.");
-            });
-
-            // 4.5 saniye sonra bitir
-            setTimeout(() => {
-                scareImg.style.display = 'none';
-                document.body.classList.remove('shake');
-                document.body.style.filter = 'none';
-              
-                if (document.exitFullscreen) document.exitFullscreen();
-            }, 4500);
-        });
+        }
     </script>
+    <audio id="clickSound" preload="auto">
+        <source src="assets/click.mp3" type="audio/mpeg">
+    </audio>
 </body>
 </html>
